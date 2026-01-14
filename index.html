@@ -26,7 +26,7 @@ html,body{
   z-index:-2;
 }
 
-/* DARK OVERLAY FOR READABILITY */
+/* DARK OVERLAY */
 .overlay{
   position:fixed;
   inset:0;
@@ -43,7 +43,7 @@ html,body{
   align-items:center;
   justify-content:space-between;
   padding:0 16px;
-  background:rgba(0,0,0,0.5);
+  background:rgba(0,0,0,0.35);
   backdrop-filter:blur(6px);
   z-index:10;
 }
@@ -52,7 +52,7 @@ html,body{
   margin:0;
 }
 .header button{
-  background:#111;
+  background:transparent;
   border:1px solid rgba(255,255,255,.25);
   color:#fff;
   border-radius:999px;
@@ -99,6 +99,11 @@ html,body{
   box-shadow:0 24px 60px rgba(0,0,0,.6);
 }
 
+/* First image spacing (no layout break) */
+.hero-img{
+  margin-top:28px;
+}
+
 /* ---------- TEXT ---------- */
 .title{
   font-size:22px;
@@ -110,8 +115,13 @@ html,body{
   color:#9aa0b3;
   text-align:center;
 }
+.favorite{
+  font-size:22px;
+  font-weight:800;
+  margin-top:4px;
+}
 
-/* HEARTS FIXED WITH DIALOGUE */
+/* HEARTS aligned with dialogue */
 .dialogue{
   display:flex;
   align-items:center;
@@ -143,7 +153,7 @@ html,body{
   padding:12px 26px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.25);
-  background:#111;
+  background:rgba(0,0,0,.6);
   color:#fff;
   font-weight:700;
   cursor:pointer;
@@ -157,11 +167,12 @@ html,body{
   left:16px;
   font-size:22px;
   cursor:pointer;
-  opacity:.8;
+  opacity:.85;
+  z-index:20;
 }
 .back:hover{opacity:1}
 
-/* HIDDEN */
+/* ---------- UTIL ---------- */
 .hidden{display:none}
 </style>
 </head>
@@ -187,17 +198,19 @@ html,body{
 
 <div class="story">
 
+  <!-- BACK BUTTON -->
   <div class="back" onclick="prevScene()">←</div>
 
   <!-- SCENE 1 -->
   <section class="scene active">
-    <img src="image-center.jpg" class="media">
+    <img src="image-center.jpg" class="media hero-img">
     <div class="dialogue">
       <span class="heart"></span>
-      <span class="title">Mai To Chill Guy hu Ekdam</span>
+      <span class="title">Mai To Chill Guy hu</span>
       <span class="heart"></span>
     </div>
-    <div class="subtitle">M apni favorite hu</div>
+    <div class="subtitle">&</div>
+    <div class="favorite">M apni favorite hu</div>
     <button class="btn" onclick="nextScene()">Continue →</button>
   </section>
 
@@ -211,14 +224,14 @@ html,body{
 
   <!-- SCENE 3 -->
   <section class="scene">
-    <button class="btn" onclick="reveal(2)">Mujse To Uljhana Bhee Mat Wrnaa</button>
+    <button class="btn" onclick="reveal2()">Mujse To Uljhana Bhee Mat Wrnaa</button>
     <img id="gif2" src="gif2.gif" class="media hidden">
     <button id="cont2" class="btn hidden" onclick="nextScene()">Still going →</button>
   </section>
 
   <!-- SCENE 4 -->
   <section class="scene">
-    <button class="btn" onclick="reveal(3)">Nahi Manegaa Ulajhana hee hai Mujsee</button>
+    <button class="btn" onclick="reveal3()">Nahi Manegaa Ulajhana hee hai Mujsee</button>
     <img id="gif3" src="gif3.gif" class="media hidden">
     <div id="gif3Text" class="subtitle hidden">
       To Tuu aaj Mere Haathoon Khtaam Hai Beta
@@ -228,7 +241,7 @@ html,body{
 </div>
 
 <script>
-/* ---------- SCENE LOGIC ---------- */
+/* ---------- SCENE NAV ---------- */
 const scenes=document.querySelectorAll('.scene');
 let current=0;
 
@@ -239,22 +252,20 @@ function showScene(i){
 }
 
 function nextScene(){
-  if(current<scenes.length-1) showScene(current+1);
+  if(current < scenes.length-1) showScene(current+1);
 }
 function prevScene(){
-  if(current>0) showScene(current-1);
+  if(current > 0) showScene(current-1);
 }
 
-/* ---------- REVEAL LOGIC ---------- */
-function reveal(n){
-  if(n===2){
-    document.getElementById('gif2').classList.remove('hidden');
-    document.getElementById('cont2').classList.remove('hidden');
-  }
-  if(n===3){
-    document.getElementById('gif3').classList.remove('hidden');
-    document.getElementById('gif3Text').classList.remove('hidden');
-  }
+/* ---------- REVEALS ---------- */
+function reveal2(){
+  document.getElementById('gif2').classList.remove('hidden');
+  document.getElementById('cont2').classList.remove('hidden');
+}
+function reveal3(){
+  document.getElementById('gif3').classList.remove('hidden');
+  document.getElementById('gif3Text').classList.remove('hidden');
 }
 
 /* ---------- AUDIO ---------- */
