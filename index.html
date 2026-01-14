@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be Like Me — The Chill Guy Edition</title>
+
+<style>
+/* ---------- BASE ---------- */
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial;
+  color:#f5f7ff;
+  overflow:hidden;
+}
+
+/* ---------- BACKGROUND VIDEO ---------- */
+.bg-video{
+  position:fixed;
+  top:50%;left:50%;
+  min-width:100%;
+  min-height:100%;
+  transform:translate(-50%,-50%);
+  object-fit:cover;
+  z-index:-2;
+}
+
+/* DARK OVERLAY FOR READABILITY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+/* ---------- HEADER ---------- */
+.header{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(6px);
+  z-index:10;
+}
+.header h1{
+  font-size:16px;
+  margin:0;
+}
+.header button{
+  background:#111;
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+  border-radius:999px;
+  padding:6px 12px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* ---------- STORY ---------- */
+.story{
+  width:100vw;
+  height:100vh;
+  padding-top:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.scene{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  padding:24px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(24px);
+  transition:.4s ease;
+}
+.scene.active{
+  opacity:1;
+  pointer-events:auto;
+  transform:none;
+}
+
+/* ---------- MEDIA ---------- */
+.media{
+  max-width:320px;
+  width:100%;
+  border-radius:22px;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);
+}
+
+/* ---------- TEXT ---------- */
+.title{
+  font-size:22px;
+  font-weight:700;
+  text-align:center;
+}
+.subtitle{
+  font-size:18px;
+  color:#9aa0b3;
+  text-align:center;
+}
+
+/* HEARTS FIXED WITH DIALOGUE */
+.dialogue{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.heart{
+  width:16px;height:16px;
+  background:#ff6fae;
+  transform:rotate(-45deg);
+  position:relative;
+  animation:beat 1.1s infinite;
+}
+.heart::before,.heart::after{
+  content:"";
+  position:absolute;
+  width:16px;height:16px;
+  background:#ff6fae;
+  border-radius:50%;
+}
+.heart::before{top:-8px;left:0}
+.heart::after{left:8px;top:0}
+@keyframes beat{
+  50%{transform:rotate(-45deg) scale(1.25)}
+}
+
+/* ---------- BUTTON ---------- */
+.btn{
+  margin-top:8px;
+  padding:12px 26px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.25);
+  background:#111;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn:active{transform:scale(.96)}
+
+/* ---------- BACK ARROW ---------- */
+.back{
+  position:absolute;
+  top:70px;
+  left:16px;
+  font-size:22px;
+  cursor:pointer;
+  opacity:.8;
+}
+.back:hover{opacity:1}
+
+/* HIDDEN */
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND VIDEO -->
+<video class="bg-video" autoplay muted loop playsinline>
+  <source src="bg-video.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Be Like Me — The Chill Guy Edition</h1>
+  <button id="muteBtn">🔇 Unmute</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="bgm" loop>
+  <source src="just chill likeandsubscribe share funny dinosaur.mp3" type="audio/mpeg">
+</audio>
+
+<div class="story">
+
+  <div class="back" onclick="prevScene()">←</div>
+
+  <!-- SCENE 1 -->
+  <section class="scene active">
+    <img src="image-center.jpg" class="media">
+    <div class="dialogue">
+      <span class="heart"></span>
+      <span class="title">Mai To Chill Guy hu Ekdam</span>
+      <span class="heart"></span>
+    </div>
+    <div class="subtitle">M apni favorite hu</div>
+    <button class="btn" onclick="nextScene()">Continue →</button>
+  </section>
+
+  <!-- SCENE 2 -->
+  <section class="scene">
+    <img src="gif1.gif" class="media">
+    <div class="title">Mai To Sbkoo Ignore Krr Deti Hu..</div>
+    <div class="subtitle">Issliye to Chill Hu Laadlee</div>
+    <button class="btn" onclick="nextScene()">Next →</button>
+  </section>
+
+  <!-- SCENE 3 -->
+  <section class="scene">
+    <button class="btn" onclick="reveal(2)">Mujse To Uljhana Bhee Mat Wrnaa</button>
+    <img id="gif2" src="gif2.gif" class="media hidden">
+    <button id="cont2" class="btn hidden" onclick="nextScene()">Still going →</button>
+  </section>
+
+  <!-- SCENE 4 -->
+  <section class="scene">
+    <button class="btn" onclick="reveal(3)">Nahi Manegaa Ulajhana hee hai Mujsee</button>
+    <img id="gif3" src="gif3.gif" class="media hidden">
+    <div id="gif3Text" class="subtitle hidden">
+      To Tuu aaj Mere Haathoon Khtaam Hai Beta
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ---------- SCENE LOGIC ---------- */
+const scenes=document.querySelectorAll('.scene');
+let current=0;
+
+function showScene(i){
+  scenes[current].classList.remove('active');
+  current=i;
+  scenes[current].classList.add('active');
+}
+
+function nextScene(){
+  if(current<scenes.length-1) showScene(current+1);
+}
+function prevScene(){
+  if(current>0) showScene(current-1);
+}
+
+/* ---------- REVEAL LOGIC ---------- */
+function reveal(n){
+  if(n===2){
+    document.getElementById('gif2').classList.remove('hidden');
+    document.getElementById('cont2').classList.remove('hidden');
+  }
+  if(n===3){
+    document.getElementById('gif3').classList.remove('hidden');
+    document.getElementById('gif3Text').classList.remove('hidden');
+  }
+}
+
+/* ---------- AUDIO ---------- */
+const bgm=document.getElementById('bgm');
+const muteBtn=document.getElementById('muteBtn');
+let playing=false;
+
+muteBtn.onclick=()=>{
+  if(!playing){
+    bgm.play();
+    playing=true;
+    muteBtn.textContent="🔊 Mute";
+  }else{
+    bgm.pause();
+    playing=false;
+    muteBtn.textContent="🔇 Unmute";
+  }
+};
+</script>
+
+</body>
+</html>
